@@ -9,7 +9,7 @@ import math
 # Takes as input a dataframe, and returns a vector of features, a vector of yields, and information on the mechanism, DOI, and the scope/optimization nature of the reaction 
 def process_dataframe(df):
     
-    solvents = one_hot_encoding(np.array(df["solvent"]).reshape(-1, 1))
+    solvents = one_hot_encoding(np.array(df["Solvent"]).reshape(-1, 1))
     ligands = one_hot_encoding(np.array(df["ligand"]).reshape(-1, 1))    
     precursors = one_hot_encoding(np.array(df["catalyst_precursor"]).reshape(-1, 1))
     #additives = one_hot_encoding(np.array([additives_mapping(precursor) for precursor in df["effective_reagents"]]).reshape(-1, 1))
@@ -27,7 +27,7 @@ def process_dataframe(df):
         
         if yield_isolated is not None:
             y = yield_isolated
-        rxn_smarts = row["substrate"] + '.' + row["coupling_partner"] + '>>' + row["product"]
+        rxn_smarts = row["substrate"] + '.' + row["coupling_partner"] + '>>' + row["PRODUCT"]
         reaction_fp = rxnfp(rxn_smarts)
         feature_vector = np.concatenate((reaction_fp, solvents[i], ligands[i], precursors[i]))#, additives[i]))
         X.append(feature_vector)

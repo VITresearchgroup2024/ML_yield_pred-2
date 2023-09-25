@@ -12,11 +12,11 @@ def draw_molecule(smiles, filename):
     else:
         print("Invalid SMILES string:", smiles)
 
-column_name = 'coupling_partner'
-data = pd.read_csv(f"D:/Reaction optimization project/source code/DFT/opti/{column_name}/coupling_partner_final.csv")
-column = 'Smiles'
-os.mkdir(f"D:/Reaction optimization project/source code/DFT/opti/{column_name}/imgsfinal")
+
+data = pd.read_csv(f"D:/Reaction optimization project/source code/DATA/substrate.csv")
+column = 'PRODUCT'
+os.mkdir(f"D:/Reaction optimization project/source code/test/imgs2")
 ls = data[column]
 for i, smiles in enumerate(ls):
-    filename = f"D:/Reaction optimization project/source code/DFT/opti/{column_name}/imgsfinal/molecule_{i+1}.png"
+    filename = f"D:/Reaction optimization project/source code/test/imgs2/{i+1}.png"
     draw_molecule(smiles, filename)

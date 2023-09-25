@@ -8,7 +8,7 @@ def process_dataframe(df):
     # converting all reactants to one string
     df['all_reactants'] = df[reaction_reagents_reactants].agg('.'.join, axis=1)
     # make reaction smiles
-    df['reaction_smiles'] = df[['all_reactants', 'product']].agg('>>'.join, axis=1)
+    df['reaction_smiles'] = df[['all_reactants', 'PRODUCT']].agg('>>'.join, axis=1)
     # get reaction_smiles and featurize them with the DRFP encoder
     RXN_SMILES = np.array(df['reaction_smiles'])
     drfp_encoder = DrfpEncoder()
@@ -30,7 +30,7 @@ def process_dataframe(df):
         
 #reaction parameters used for the DRFP featurisation
 reaction_reagents_reactants = ['substrate', 'coupling_partner',
-       'solvent', 'catalyst_precursor', 
+       'Solvent', 'catalyst_precursor', 
        'reagent',
        'ligand']
 

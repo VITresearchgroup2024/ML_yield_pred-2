@@ -6,7 +6,7 @@ import Drfp.generate_featuresDRFP as drfp_ft
 import visualization as vs
 from analysis import analysis_train_set_size, random_split, stratified_split 
 
-dataset = pd.read_csv("D:/Reaction optimization project/source code/DATA/Dataset.csv")
+dataset = pd.read_csv("D:/Reaction optimization project/source code/DATA/Dataset1.6.csv")
 X_fp, y_fp, DOI_fp, mechanisms_fp, origins_fp = drfp_ft.process_dataframe(dataset)
 
 

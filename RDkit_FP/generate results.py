@@ -23,7 +23,7 @@ metric = r2_score
  #%%   
 #1.Random split
 
-df_fp = pd.read_csv('D:/Reaction optimization project/source code/DATA/Dataset.csv')
+df_fp = pd.read_csv('D:/Reaction optimization project/source code/DATA/Dataset1.6.csv')
 df_fp = df_fp.reset_index(drop=True)
 X_fp, y_fp, DOI_fp, mechanisms_fp, origins_fp = rdkit_ft.process_dataframe(df_fp)
 

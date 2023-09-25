@@ -277,7 +277,7 @@ merged_df.to_csv("D:/Reaction optimization project/NiCOlit work reproduction/NiC
 
 """
 def extract_descriptors_from_folder(folder_path):
-    log_files = [file for file in os.listdir(folder_path) if file.endswith(".LOG") or file.endswith(".log") or file.endswith(".out")]
+    log_files = [file for file in os.listdir(folder_path) if file.endswith(".LOG") or file.endswith(".log") or file.endswith(".OUT")]
     merged_df = pd.DataFrame()
 
     for log_file in log_files:
@@ -290,5 +290,5 @@ def extract_descriptors_from_folder(folder_path):
     return merged_df
 
 
-df = extract_descriptors_from_folder("D:/Reaction optimization project/source code/DFT/opti/ligand/optimized structure")
-df.to_csv("D:/Reaction optimization project/source code/DFT/opti/ligand/ligand_trial_descriptors.csv")
+df = extract_descriptors_from_folder("D:/Reaction optimization project/source code/DFT/opti/product/optimized final")
+df.to_csv("D:/Reaction optimization project/source code/DFT/opti/product/product_descriptors.csv")

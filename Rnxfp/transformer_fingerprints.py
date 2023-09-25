@@ -3,8 +3,7 @@
 __all__ = ['RXNBERTFingerprintGenerator', 'RXNBERTMinhashFingerprintGenerator', 'get_default_model_and_tokenizer',
            'generate_fingerprints']
 
-import sys
-sys.path.append("D:/Reaction optimization project/NiCOlit work reproduction/NiCOlit/Rnxfp")
+
 import torch
 import pkg_resources
 import numpy as np
@@ -15,8 +14,8 @@ from itertools import islice
 
 from transformers import BertModel
 
-from rxnfp.core import FingerprintGenerator
-from rxnfp.tokenization import SmilesTokenizer
+from core import FingerprintGenerator
+from tokenization import SmilesTokenizer
 
 
 # Cell
