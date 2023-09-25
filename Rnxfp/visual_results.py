@@ -20,6 +20,12 @@ y_rxnfp = np.array(df_dataset.Yield)
 values, baseline_values, model_values, stratification_values, additional_stratification_values = random_split(X_rxnfp, y_rxnfp, origins_rxnfp,mechanisms_rxnfp, n_iterations=10)
 display_df =  pd.DataFrame(zip(values, baseline_values, model_values, stratification_values, additional_stratification_values), columns = ['Yields', 'Baseline', 'Predicted Yields', 'Origin', 'Mechanism'])
 display_df.to_csv("D:/Reaction optimization project/source code/Rnxfp/data/testrandom_split_rxnfp_descriptors_test_size_0.2.csv")
+#%%
+import visualization as vs
+
+csv_file = "D:/Reaction optimization project/source code/Rnxfp/data/testrandom_split_rxnfp_descriptors_test_size_0.2.csv"
+image_path = 'D:/Reaction optimization project/source code/Rnxfp/data/testrandom_split_rxnfp_descriptors_test_size_0.2.png'
+vs.visualization(csv_file, image_path)
 
 
 #%%%
