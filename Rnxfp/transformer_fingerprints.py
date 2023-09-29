@@ -11,7 +11,6 @@ from typing import List
 from tqdm import tqdm
 from itertools import islice
 
-
 from transformers import BertModel
 
 from core import FingerprintGenerator
@@ -107,14 +106,14 @@ class RXNBERTMinhashFingerprintGenerator(FingerprintGenerator):
 def get_default_model_and_tokenizer(model='bert_ft', force_no_cuda=False):
 
     model_path =  pkg_resources.resource_filename(
-                "rxnfp",
-                f"models/transformers/{model}"
+                "Rnxfp",
+                f"Rnxfp/models/transformers/{model}"
             )
 
     tokenizer_vocab_path = (
         pkg_resources.resource_filename(
-                    "rxnfp",
-                    f"models/transformers/{model}/vocab.txt"
+                    "Rnxfp",
+                    f"Rnxfp/models/transformers/{model}/vocab.txt"
                 )
     )
     device = torch.device("cuda" if (torch.cuda.is_available() and not force_no_cuda) else "cpu")

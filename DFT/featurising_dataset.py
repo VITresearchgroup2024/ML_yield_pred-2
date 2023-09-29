@@ -44,7 +44,7 @@ def featurize_smile(descrip_data_path,dataset_path,column_name):
           Nan_index.append(i)
        i=i+1      
           
-  print(f"index with NaN values for {column_name} \n {Nan_index} ")        
+  #print(f"index with NaN values for {column_name} \n {Nan_index} ")        
   return descriptor_array
 
 # Converts a list of integers or strings to a one hot featurisation

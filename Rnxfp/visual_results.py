@@ -8,7 +8,7 @@ from analysis import analysis_train_set_size, random_split, stratified_split
 
 
 
-df_dataset = pd.read_csv('D:/Reaction optimization project/source code/Rnxfp/data/rnxfp_features.csv')
+df_dataset = pd.read_csv('D:/Reaction optimization project/source code/Rnxfp/data/rnxfp_features_Dataset1.8.csv')
 df_dataset = df_dataset.reset_index(drop=True)
 X_rxnfp = np.array([json.loads(x) for x in df_dataset.rxnfp])
 substrate_rxnfp = np.array(df_dataset.substrate) 
@@ -19,12 +19,12 @@ y_rxnfp = np.array(df_dataset.Yield)
 
 values, baseline_values, model_values, stratification_values, additional_stratification_values = random_split(X_rxnfp, y_rxnfp, origins_rxnfp,mechanisms_rxnfp, n_iterations=10)
 display_df =  pd.DataFrame(zip(values, baseline_values, model_values, stratification_values, additional_stratification_values), columns = ['Yields', 'Baseline', 'Predicted Yields', 'Origin', 'Mechanism'])
-display_df.to_csv("D:/Reaction optimization project/source code/Rnxfp/data/testrandom_split_rxnfp_descriptors_test_size_0.2.csv")
+display_df.to_csv("D:/Reaction optimization project/source code/Rnxfp/data/testrandom_split_rxnfp_descriptors_test_size_0.2_Dataset1.8.csv")
 #%%
 import visualization as vs
 
-csv_file = "D:/Reaction optimization project/source code/Rnxfp/data/testrandom_split_rxnfp_descriptors_test_size_0.2.csv"
-image_path = 'D:/Reaction optimization project/source code/Rnxfp/data/testrandom_split_rxnfp_descriptors_test_size_0.2.png'
+csv_file = "D:/Reaction optimization project/source code/Rnxfp/data/testrandom_split_rxnfp_descriptors_test_size_0.2_Dataset1.8.csv"
+image_path = 'D:/Reaction optimization project/source code/Rnxfp/data/testrandom_split_rxnfp_descriptors_test_size_0.2_Dataset1.8.png'
 vs.visualization(csv_file, image_path)
 
 

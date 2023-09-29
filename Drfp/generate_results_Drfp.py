@@ -6,7 +6,7 @@ import Drfp.generate_featuresDRFP as drfp_ft
 import visualization as vs
 from analysis import analysis_train_set_size, random_split, stratified_split 
 
-dataset = pd.read_csv("D:/Reaction optimization project/source code/DATA/Dataset1.6.csv")
+dataset = pd.read_csv("D:/Reaction optimization project/source code/DATA/Dataset1.8.csv")
 X_fp, y_fp, DOI_fp, mechanisms_fp, origins_fp = drfp_ft.process_dataframe(dataset)
 
 
@@ -15,10 +15,10 @@ X_fp, y_fp, DOI_fp, mechanisms_fp, origins_fp = drfp_ft.process_dataframe(datase
 values, baseline_values, model_values, stratification_values, additional_stratification_values = random_split(X_fp, y_fp, origins_fp, mechanisms_fp, n_iterations=20)
 display_df =  pd.DataFrame(zip(values, baseline_values, model_values, stratification_values, additional_stratification_values), 
                            columns = ['Yields', 'Baseline', 'Predicted Yields', 'Origin', 'Coupling Partner'])
-display_df.to_csv("D:/Reaction optimization project/source code/Drfp/results csv/Drfp_results.csv")
+display_df.to_csv("D:/Reaction optimization project/source code/Drfp/results csv/Drfp_results_dataset1.7.csv")
 #%%
-csv_file = "D:/Reaction optimization project/source code/Drfp/results csv/Drfp_results.csv"
-image_path = 'D:/Reaction optimization project/source code/Drfp/results csv/random_split_drfp_descriptors_test_size_0.2_full.png'
+csv_file = "D:/Reaction optimization project/source code/Drfp/results csv/Drfp_results_dataset1.7.csv"
+image_path = 'D:/Reaction optimization project/source code/Drfp/results csv/random_split_drfp_descriptors_test_size_0.2_Dataset1.7.png'
 vs.visualization(csv_file, image_path)
 
 #%%
