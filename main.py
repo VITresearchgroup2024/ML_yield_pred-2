@@ -111,7 +111,7 @@ def get_result(data_id,output_path,feature_ids,models,input_datapath, n_iteratio
                         append_summary(data_id,model,feature_id,test_size,n_iterations,rmse,mae, r2)
                         
                     elif model == 'nural_net':
-                       for epoch in range(800,1000,200):
+                       for epoch in range(800,3600,200):
                            lr = 0.0001
                            expt_yield,pred_yield =  neural_network(x,y,strat1,strat2,test_size, n_iterations,epoch,lr)
                            df =pd.DataFrame(zip(expt_yield,pred_yield), columns = ['Yields','Predicted Yields'])
@@ -142,7 +142,7 @@ def get_result(data_id,output_path,feature_ids,models,input_datapath, n_iteratio
     summary.to_csv(f'{output_path}/{data_id}/{data_id}_SUMMARY.csv')          
                
 if __name__ == "__main__":
-    input_datapath ="D:/Reaction optimization project/source code" #location of the folder containing datasets
+    input_datapath = filepath  #location of the folder containing datasets
     data_id = 'Dataset2.0' #name of the dataset
     output_path = 'D:/Reaction optimization project/source code/result' #location of fodder to save the results
     feature_ids =['DRFP' ,'DFT' , 'RDkitFP']   #possibile vaules : 'DRFP' ,'DFT' , 'RDkitFP' , 'RxnFP' 
