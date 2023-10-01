@@ -17,7 +17,7 @@ def process_dataframe(df):
     # get DOIs origin
     DOIs = df.DOI.to_list()
     # get CP class
-    cps = df.couplingpartner_class.to_list()
+    cps = df.Mechanism.to_list()
     # get data origin
     origins = df.origin.to_list()
     

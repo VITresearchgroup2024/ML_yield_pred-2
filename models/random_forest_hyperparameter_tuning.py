@@ -2,6 +2,8 @@ import numpy as np
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split, GridSearchCV
 
+from sklearn.model_selection import StratifiedShuffleSplit
+
 from skopt import BayesSearchCV
 
 
@@ -50,25 +52,29 @@ def random_forest_h_tuning_grid(X, y, stratification, additional_stratification,
     return np.array(true_values), np.array(model_values)
 
 
+
 def random_forest_h_tuning_bayes_strat(X, y, stratification, additional_stratification,
                                         test_size=0.2, n_iterations=1):
     true_values = []
     model_values = []
 
     for i in range(n_iterations):
-        # Split the data into training and testing sets while maintaining stratification
-        X_train, X_test, y_train, y_test = train_test_split(
-            X, y, test_size=test_size, random_state=i, stratify=stratification)
+        # Create a StratifiedShuffleSplit object to maintain stratification based on `stratification`
+        sss = StratifiedShuffleSplit(n_splits=1, test_size=test_size, random_state=i)
+
+        for train_index, test_index in sss.split(X, stratification):
+            X_train, X_test = X[train_index], X[test_index]
+            y_train, y_test = y[train_index], y[test_index]
 
         # Define the Random Forest Regressor with hyperparameters to tune
         rf = RandomForestRegressor()
 
         # Define the search space for hyperparameter tuning
         search_space = {
-            'n_estimators': (10, 1000),  #
-            'max_depth': (1, 32),        
-            'min_samples_split': (2, 20),  
-            'min_samples_leaf': (1, 20)    
+            'n_estimators': (10, 1000),
+            'max_depth': (1, 32),
+            'min_samples_split': (2, 20),
+            'min_samples_leaf': (1, 20)
         }
 
         # Perform Bayesian hyperparameter tuning using MAE as the objective function

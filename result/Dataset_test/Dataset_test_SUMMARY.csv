@@ -1,4 +1,0 @@
-,Dataset,model_type,featurisation_method,epoch,learnin_rate,test_size,iterations,RMSE,MAE,Correlation
-0,Dataset_test,random_forest_h_tuning_grid,DRFP,none,none,0.2,5,25.96870490288613,20.375564951190064,0.3352728691712268
-1,Dataset_test,random_forest_h_tuning_grid,DFT,none,none,0.2,5,26.06225005740021,20.342361554740126,0.31761819109667166
-2,Dataset_test,random_forest_h_tuning_grid,RDkitFP,none,none,0.2,5,27.820273113040578,21.189745192629967,0.2371035382956732

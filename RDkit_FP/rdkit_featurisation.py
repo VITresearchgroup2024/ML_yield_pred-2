@@ -33,7 +33,7 @@ def process_dataframe(df):
         X.append(feature_vector)
         yields.append(y)
         DOIs.append(row["DOI"])
-        mechanisms.append(row["couplingpartner_class"])
+        mechanisms.append(row["Mechanism"])
         origins.append(origin_mapping(row['origin']))
     
     return np.array(X), np.array(yields), np.array(DOIs), np.array(mechanisms), np.array(origins)

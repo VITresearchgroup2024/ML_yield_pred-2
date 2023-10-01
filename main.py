@@ -10,6 +10,7 @@ import Drfp.generate_featuresDRFP as drfp_ft
 from DFT.featurising_dataset import featurize_main_data
 import RDkit_FP.rdkit_featurisation as rdkit_ft
 from Nuralnetwork.nural_net import neural_network
+from Nuralnetwork.nural_net_strat import neural_network_with_attention_hyperparameter_tuning
 from Rnxfp.get_rxnfp_features import rxn_featurise
 import visualization as vs
 from analysis import random_split
@@ -76,7 +77,7 @@ def get_result(data_id,output_path,feature_ids,models):
         for feature_id in feature_ids :
             x,y,strat1,strat2 = featurise(feature_id, dataset)
             if model == 'random_forest_h_tuning_bayes_strat' :
-                expt_yield,pred_yield = random_forest_h_tuning_bayes_strat(x,y,strat1,strat2,test_size, n_iterations)
+                expt_yield,pred_yield = random_forest_h_tuning_bayes_strat(x,y,strat2,strat1,test_size, n_iterations)
                 df =pd.DataFrame(zip(expt_yield,pred_yield), columns = ['Yields','Predicted Yields'])
                 result_csv_path =f"{output_path}/{data_id}/csv_result/random_split_{feature_id}_model={model}.csv"
                 df.to_csv(result_csv_path)
@@ -107,7 +108,7 @@ def get_result(data_id,output_path,feature_ids,models):
                 append_summary(data_id,model,feature_id,test_size,n_iterations,rmse,mae, r2)
                 
             elif model == 'nural_net':
-               for epoch in range(800,4000,200):
+               for epoch in range(800,1400,200):
                    lr = 0.0001
                    expt_yield,pred_yield =  neural_network(x,y,strat1,strat2,test_size, n_iterations,epoch,lr)
                    df =pd.DataFrame(zip(expt_yield,pred_yield), columns = ['Yields','Predicted Yields'])
@@ -128,8 +129,8 @@ def get_result(data_id,output_path,feature_ids,models):
 if __name__ == "__main__":
     data_id = 'Dataset_test'
     output_path = 'D:/Reaction optimization project/source code/result'
-    feature_ids =['DRFP','DFT' , 'RDkitFP' ]   #possibile vaules : 'DRFP' ,'DFT' , 'RDkitFP' , 'RxnFP' 
-    models = ['random_forest' , 'random_forest_h_tuning_grid','random_forest_h_tuning_bayes_strat'] #possible values : 'nural_net','random_forest' , 'random_forest_h_tuning_grid','random_forest_h_tuning_bayes_strat'
+    feature_ids =['DRFP' , 'RDkitFP']   #possibile vaules : 'DRFP' ,'DFT' , 'RDkitFP' , 'RxnFP' 
+    models = ['nural_net','random_forest' , 'random_forest_h_tuning_grid','random_forest_h_tuning_bayes_strat'] #possible values : 'nural_net','random_forest' , 'random_forest_h_tuning_grid','random_forest_h_tuning_bayes_strat'
     get_result(data_id,output_path,feature_ids,models)
     
 
