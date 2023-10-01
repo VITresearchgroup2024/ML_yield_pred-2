@@ -105,17 +105,11 @@ class RXNBERTMinhashFingerprintGenerator(FingerprintGenerator):
 
 def get_default_model_and_tokenizer(model='bert_ft', force_no_cuda=False):
 
-    model_path =  pkg_resources.resource_filename(
-                "Rnxfp",
-                f"Rnxfp/models/transformers/{model}"
-            )
+    model_path =  f"D:/Reaction optimization project/source code/Rnxfp/models/transformers/{model}"
+             
+    tokenizer_vocab_path = f"D:/Reaction optimization project/source code/Rnxfp/models/transformers/{model}/vocab.txt"
 
-    tokenizer_vocab_path = (
-        pkg_resources.resource_filename(
-                    "Rnxfp",
-                    f"Rnxfp/models/transformers/{model}/vocab.txt"
-                )
-    )
+
     device = torch.device("cuda" if (torch.cuda.is_available() and not force_no_cuda) else "cpu")
 
     model = BertModel.from_pretrained(model_path)

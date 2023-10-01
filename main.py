@@ -129,7 +129,7 @@ def get_result(data_id,output_path,feature_ids,models):
 if __name__ == "__main__":
     data_id = 'Dataset_test'
     output_path = 'D:/Reaction optimization project/source code/result'
-    feature_ids =['DRFP' , 'RDkitFP']   #possibile vaules : 'DRFP' ,'DFT' , 'RDkitFP' , 'RxnFP' 
+    feature_ids =['RxnFP' ]   #possibile vaules : 'DRFP' ,'DFT' , 'RDkitFP' , 'RxnFP' 
     models = ['nural_net','random_forest' , 'random_forest_h_tuning_grid','random_forest_h_tuning_bayes_strat'] #possible values : 'nural_net','random_forest' , 'random_forest_h_tuning_grid','random_forest_h_tuning_bayes_strat'
     get_result(data_id,output_path,feature_ids,models)
     
