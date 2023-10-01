@@ -7,7 +7,7 @@ from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
 def visualization(csv_file, image_path):
     df = pd.read_csv(csv_file)
 
-    h = sns.jointplot("Yields", "Predicted Yields", df, kind='kde', fill=True)
+    h = sns.jointplot(x="Yields", y="Predicted Yields", data=df, kind='kde', fill=True)
     h.set_axis_labels('Experimental yields', 'Predicted yields')
     h.ax_joint.set_xticks([0, 20, 40, 60, 80, 100])
     h.ax_joint.set_yticks([0, 20, 40, 60, 80, 100])

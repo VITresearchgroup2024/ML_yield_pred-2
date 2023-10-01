@@ -3,28 +3,31 @@ import pandas as pd
 
 import os
 filepath ='D:/Reaction optimization project/source code'
-os.sys.path.append(f"filepath/Rnxfp") 
-os.sys.path.append(f"filepath/models") 
-os.sys.path.append(f"filepath") 
 
-import Drfp.generate_featuresDRFP as drfp_ft
-from DFT.featurising_dataset import featurize_main_data
-import RDkit_FP.rdkit_featurisation as rdkit_ft
-from Nuralnetwork.nural_net import neural_network
-from Nuralnetwork.nural_net_strat import neural_network_with_attention_hyperparameter_tuning
-from Rnxfp.get_rxnfp_features import rxn_featurise
+os.chdir(f"{filepath}")
+
+print(f"working directory : {os.getcwd()}") 
+
+import Featurisation_methods.Drfp.generate_featuresDRFP as drfp_ft
+from Featurisation_methods.DFT.featurising_dataset import featurize_main_data
+import Featurisation_methods.RDkit_FP.rdkit_featurisation as rdkit_ft
+from models.Nuralnetwork.nural_net import neural_network
+from models.Nuralnetwork.nural_net_strat import neural_network_with_attention_hyperparameter_tuning
+from Featurisation_methods.Rxnfp.get_rxnfp_features import rxn_featurise
 import visualization as vs
 from analysis import random_split
-from random_forest_hyperparameter_tuning import random_forest_h_tuning_grid,random_forest_h_tuning_bayes_strat
+from models.random_forest.random_forest_hyperparameter_tuning import random_forest_h_tuning_grid,random_forest_h_tuning_bayes_strat
 
-
+#turnoff warnings(optional)
+import warnings
+warnings.simplefilter('ignore')
 
 def featurise(feature_id,dataset):
     if feature_id == 'DRFP':
         X_fp, y_fp, DOI_fp, mechanisms_fp, origins_fp = drfp_ft.process_dataframe(dataset)
         return X_fp, y_fp, DOI_fp, mechanisms_fp
     elif feature_id == 'DFT':
-        data_path ="D:/Reaction optimization project/source code/DFT/descriptor_data/"
+        data_path ="D:/Reaction optimization project/source code/Featurisation_methods/DFT/descriptor_data/"
         dataset_path='D:/Reaction optimization project/source code/DATA/Dataset1.7.csv'
         X_dft, y_dft, DOI_dft, mechanisms_dft, origins_dft = featurize_main_data(dataset_path,data_path)
         return  X_dft, y_dft, DOI_dft, mechanisms_dft
@@ -39,9 +42,9 @@ def featurise(feature_id,dataset):
 
 
 
-def get_result(data_id,output_path,feature_ids,models):
+def get_result(data_id,output_path,feature_ids,models,input_datapath, n_iterations=5,test_size = 0.2):
     
-    dataset = pd.read_csv(f"D:/Reaction optimization project/source code/DATA/{data_id}.csv")
+    dataset = pd.read_csv(f"{input_datapath}/DATA/{data_id}.csv")
     directory_path = "your_directory_path_here"
 
  
@@ -60,7 +63,7 @@ def get_result(data_id,output_path,feature_ids,models):
     rmse_ls = []
     mae_ls = []
     r2_ls = []
-    def append_summary(data_id,model,feature_id,test_size,n_iterations,rmse,mae, r2):
+    def append_summary(data_id,model,feature_id,test_size,n_iterations,rmse,mae, r2,lr='None',epoch='None'):
         model_ls.append(model)
         feature_ls.append(feature_id)
         data_ls.append(data_id)
@@ -69,10 +72,12 @@ def get_result(data_id,output_path,feature_ids,models):
         rmse_ls.append(rmse)
         mae_ls.append(mae)
         r2_ls.append(r2)
+        epoch_ls.append(epoch)
+        lr_ls.append(lr)
+        print(f"\n\n\tCalculation done for\t:\n \ndata_id={data_id} \nmodel={model}\nfeature_id={feature_id}\ntest_size={test_size}\nn_iterations={n_iterations}\nrmse={rmse}\nmae={mae}\nlr={lr}\nepoch={epoch}\ncorrelation = {r2}")
+              
     
-    
-    n_iterations=5
-    test_size = 0.2
+
 
     for model in models :
         for feature_id in feature_ids :
@@ -94,8 +99,6 @@ def get_result(data_id,output_path,feature_ids,models):
                 df.to_csv(result_csv_path)
                 image_path = f"{output_path}/{data_id}/img_result/random_split_{feature_id}_model={model}.png"   
                 rmse , mae , r2 = vs.visualization(result_csv_path, image_path)
-                epoch_ls.append('none')
-                lr_ls.append('none')
                 append_summary(data_id,model,feature_id,test_size,n_iterations,rmse,mae, r2)
             elif model == 'random_forest':
                 expt_yield, baseline_values, pred_yield, stratification_values, additional_stratification_values = random_split(x,y,strat1,strat2, n_iterations=n_iterations)
@@ -104,12 +107,10 @@ def get_result(data_id,output_path,feature_ids,models):
                 df.to_csv(result_csv_path)
                 image_path = f"{output_path}/{data_id}/img_result/random_split_{feature_id}_model={model}.png"   
                 rmse , mae , r2 = vs.visualization(result_csv_path, image_path)
-                epoch_ls.append('none')
-                lr_ls.append('none')
                 append_summary(data_id,model,feature_id,test_size,n_iterations,rmse,mae, r2)
                 
             elif model == 'nural_net':
-               for epoch in range(800,1400,200):
+               for epoch in range(800,1000,200):
                    lr = 0.0001
                    expt_yield,pred_yield =  neural_network(x,y,strat1,strat2,test_size, n_iterations,epoch,lr)
                    df =pd.DataFrame(zip(expt_yield,pred_yield), columns = ['Yields','Predicted Yields'])
@@ -119,20 +120,30 @@ def get_result(data_id,output_path,feature_ids,models):
                    rmse , mae , r2 = vs.visualization(result_csv_path, image_path)
                    epoch_ls.append(epoch)
                    lr_ls.append(lr)
-                   append_summary(data_id,model,feature_id,test_size,n_iterations,rmse,mae, r2)
+                   append_summary(data_id,model,feature_id,test_size,n_iterations,rmse,mae, r2,lr=lr,epoch=epoch)
                
-    print(data_ls)
+  
     summary = pd.DataFrame(zip(data_ls,model_ls,feature_ls,epoch_ls,lr_ls,test_size_ls,iteration_ls,rmse_ls,mae_ls, r2_ls)
                                        , columns =['Dataset','model_type','featurisation_method','epoch','learnin_rate','test_size',
                                                   'iterations','RMSE','MAE','Correlation'])
+    summary = summary.sort_values(by='Correlation', ascending=False)
+    
+    print(f"\n\n\tBest model summary by Correlation :\n")
+    first_row = summary.iloc[0]
+    for column, value in first_row.iteritems():
+      print(f"{column}: {value}")
+
     summary.to_csv(f'{output_path}/{data_id}/{data_id}_SUMMARY.csv')          
                
 if __name__ == "__main__":
+    input_datapath ="D:/Reaction optimization project/source code"
     data_id = 'Dataset_test'
     output_path = 'D:/Reaction optimization project/source code/result'
-    feature_ids =['RxnFP' ]   #possibile vaules : 'DRFP' ,'DFT' , 'RDkitFP' , 'RxnFP' 
+    feature_ids =['DRFP' ,'DFT' , 'RDkitFP' , 'RxnFP'  ]   #possibile vaules : 'DRFP' ,'DFT' , 'RDkitFP' , 'RxnFP' 
     models = ['nural_net','random_forest' , 'random_forest_h_tuning_grid','random_forest_h_tuning_bayes_strat'] #possible values : 'nural_net','random_forest' , 'random_forest_h_tuning_grid','random_forest_h_tuning_bayes_strat'
-    get_result(data_id,output_path,feature_ids,models)
+    n_iterations=1
+    test_size = 0.2
+    get_result(data_id,output_path,feature_ids,models,input_datapath, n_iterations,test_size)
     
 
 

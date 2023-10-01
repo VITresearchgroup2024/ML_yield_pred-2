@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
-from Rnxfp.transformer_fingerprints import (
+
+from Featurisation_methods.Rxnfp.transformer_fingerprints import (
     RXNBERTFingerprintGenerator, get_default_model_and_tokenizer, generate_fingerprints
 )
 

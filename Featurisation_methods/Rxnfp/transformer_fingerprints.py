@@ -10,11 +10,12 @@ import numpy as np
 from typing import List
 from tqdm import tqdm
 from itertools import islice
+import os
 
 from transformers import BertModel
 
-from core import FingerprintGenerator
-from tokenization import SmilesTokenizer
+from Featurisation_methods.Rxnfp.core import FingerprintGenerator
+from Featurisation_methods.Rxnfp.tokenization import SmilesTokenizer
 
 
 # Cell
@@ -105,9 +106,9 @@ class RXNBERTMinhashFingerprintGenerator(FingerprintGenerator):
 
 def get_default_model_and_tokenizer(model='bert_ft', force_no_cuda=False):
 
-    model_path =  f"D:/Reaction optimization project/source code/Rnxfp/models/transformers/{model}"
+    model_path =  f"{os.getcwd()}/Featurisation_methods/Rxnfp/models/transformers/{model}"
              
-    tokenizer_vocab_path = f"D:/Reaction optimization project/source code/Rnxfp/models/transformers/{model}/vocab.txt"
+    tokenizer_vocab_path = f"{os.getcwd()}/Featurisation_methods/Rxnfp/models/transformers/{model}/vocab.txt"
 
 
     device = torch.device("cuda" if (torch.cuda.is_available() and not force_no_cuda) else "cpu")
