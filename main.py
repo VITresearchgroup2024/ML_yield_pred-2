@@ -13,7 +13,7 @@ from Featurisation_methods.DFT.featurising_dataset import featurize_main_data
 import Featurisation_methods.RDkit_FP.rdkit_featurisation as rdkit_ft
 from models.Nuralnetwork.nural_net import neural_network
 from models.Nuralnetwork.nural_net_strat import neural_network_with_attention_hyperparameter_tuning
-from Featurisation_methods.Rxnfp.get_rxnfp_features import rxn_featurise
+#from Featurisation_methods.Rxnfp.get_rxnfp_features import rxn_featurise
 import visualization as vs
 from analysis import random_split
 from models.random_forest.random_forest_hyperparameter_tuning import random_forest_h_tuning_grid,random_forest_h_tuning_bayes_strat
@@ -136,10 +136,10 @@ def get_result(data_id,output_path,feature_ids,models,input_datapath, n_iteratio
     summary.to_csv(f'{output_path}/{data_id}/{data_id}_SUMMARY.csv')          
                
 if __name__ == "__main__":
-    input_datapath ="D:/Reaction optimization project/source code"
-    data_id = 'Dataset_test'
-    output_path = 'D:/Reaction optimization project/source code/result'
-    feature_ids =['DRFP' ,'DFT' , 'RDkitFP' , 'RxnFP'  ]   #possibile vaules : 'DRFP' ,'DFT' , 'RDkitFP' , 'RxnFP' 
+    input_datapath ="D:/Reaction optimization project/source code" #location of the folder containing datasets
+    data_id = 'Dataset_test' #name of the dataset
+    output_path = 'D:/Reaction optimization project/source code/result' #location of fodder to save the results
+    feature_ids =['DRFP' ,'DFT' , 'RDkitFP']   #possibile vaules : 'DRFP' ,'DFT' , 'RDkitFP' , 'RxnFP' 
     models = ['nural_net','random_forest' , 'random_forest_h_tuning_grid','random_forest_h_tuning_bayes_strat'] #possible values : 'nural_net','random_forest' , 'random_forest_h_tuning_grid','random_forest_h_tuning_bayes_strat'
     n_iterations=1
     test_size = 0.2
