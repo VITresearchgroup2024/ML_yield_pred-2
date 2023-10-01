@@ -2,9 +2,10 @@ import pandas as pd
 
 
 import os
-os.sys.path.append("D:/Reaction optimization project/source code/Rnxfp") 
-os.sys.path.append("D:/Reaction optimization project/source code/models") 
-os.sys.path.append("D:/Reaction optimization project/source code") 
+filepath ='D:/Reaction optimization project/source code'
+os.sys.path.append(f"filepath/Rnxfp") 
+os.sys.path.append(f"filepath/models") 
+os.sys.path.append(f"filepath") 
 
 import Drfp.generate_featuresDRFP as drfp_ft
 from DFT.featurising_dataset import featurize_main_data
