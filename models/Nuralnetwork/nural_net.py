@@ -38,8 +38,8 @@ def neural_network(X, y, stratification, additional_stratification, test_size, n
     model_values =[]
 
     for i in range(n_iterations):
-        X_train, X_test, y_train, y_test, strat_train, strat_test, _, additional_strat_test = train_test_split(
-            X, y, stratification, additional_stratification, test_size=test_size, random_state=i
+        X_train, X_test, y_train, y_test = train_test_split(
+            X, y,test_size=test_size, random_state=i
         )
 
         # Convert data to PyTorch tensors
