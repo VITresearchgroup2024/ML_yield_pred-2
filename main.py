@@ -12,11 +12,11 @@ import Featurisation_methods.Drfp.generate_featuresDRFP as drfp_ft
 from Featurisation_methods.DFT.featurising_dataset import featurize_main_data
 import Featurisation_methods.RDkit_FP.rdkit_featurisation as rdkit_ft
 from models.Nuralnetwork.nural_net import neural_network
-from models.Nuralnetwork.nural_net_strat import neural_network_with_attention_hyperparameter_tuning
+from models.Nuralnetwork.nural_net_attention import neural_network_with_attention_hyperparameter_tuning as nnaht
 from Featurisation_methods.Rxnfp.get_rxnfp_features import rxn_featurise
 import util.visualization as vs
 from analysis import random_split
-from models.random_forest.random_forest_hyperparameter_tuning import random_forest_h_tuning_grid,random_forest_h_tuning_bayes_strat
+from models.random_forest.random_forest import random_forest_h_tuning_grid,random_forest_h_tuning_bayes_strat,random_forest
 
 #turnoff warnings(optional)
 import warnings
@@ -102,14 +102,22 @@ def get_result(data_id,output_path,feature_ids,models,input_datapath, n_iteratio
                         rmse , mae , r2 = vs.visualization(result_csv_path, image_path)
                         append_summary(data_id,model,feature_id,test_size,n_iterations,rmse,mae, r2)
                     elif model == 'random_forest':
-                        expt_yield, baseline_values, pred_yield, stratification_values, additional_stratification_values = random_split(x,y,strat1,strat2, n_iterations=n_iterations)
+                        expt_yield, pred_yield = random_forest(x,y, test_size ,n_iterations=n_iterations)
                         df =pd.DataFrame(zip(expt_yield,pred_yield), columns = ['Yields','Predicted Yields'])
                         result_csv_path =f"{output_path}/{data_id}/csv_result/random_split_{feature_id}_model={model}.csv"
                         df.to_csv(result_csv_path)
                         image_path = f"{output_path}/{data_id}/img_result/random_split_{feature_id}_model={model}.png"   
                         rmse , mae , r2 = vs.visualization(result_csv_path, image_path)
                         append_summary(data_id,model,feature_id,test_size,n_iterations,rmse,mae, r2)
-                        
+                    elif model == 'neural_network_with_attention_hyperparameter_tuning':
+                        expt_yield, pred_yield = nnaht(x,y,strat1,strat2, test_size ,n_iterations=n_iterations)
+                        df =pd.DataFrame(zip(expt_yield,pred_yield), columns = ['Yields','Predicted Yields'])
+                        result_csv_path =f"{output_path}/{data_id}/csv_result/random_split_{feature_id}_model={model}.csv"
+                        df.to_csv(result_csv_path)
+                        image_path = f"{output_path}/{data_id}/img_result/random_split_{feature_id}_model={model}.png"   
+                        rmse , mae , r2 = vs.visualization(result_csv_path, image_path)
+                        append_summary(data_id,model,feature_id,test_size,n_iterations,rmse,mae, r2) 
+                    
                     elif model == 'nural_net':
                        for epoch in range(800,3600,200):
                            lr = 0.0001
@@ -145,9 +153,9 @@ if __name__ == "__main__":
     input_datapath = filepath  #location of the folder containing datasets
     data_id = 'Dataset2.0' #name of the dataset
     output_path = 'D:/Reaction optimization project/source code/result' #location of fodder to save the results
-    feature_ids =['DRFP' ,'DFT' , 'RDkitFP']   #possibile vaules : 'DRFP' ,'DFT' , 'RDkitFP' , 'RxnFP' 
-    models = ['nural_net','random_forest' , 'random_forest_h_tuning_grid','random_forest_h_tuning_bayes_strat'] #possible values : 'nural_net','random_forest' , 'random_forest_h_tuning_grid','random_forest_h_tuning_bayes_strat'
-    n_iterations_ls=[5,10]
+    feature_ids =['DRFP' ,'DFT' , 'RDkitFP' , 'RxnFP' ]   #possibile vaules : 'DRFP' ,'DFT' , 'RDkitFP' , 'RxnFP' 
+    models = ['nural_net','random_forest' , 'random_forest_h_tuning_grid','random_forest_h_tuning_bayes_strat'] #possible values : 'nural_net','random_forest' , 'random_forest_h_tuning_grid','random_forest_h_tuning_bayes_strat','neural_network_with_attention_hyperparameter_tuning'
+    n_iterations_ls=[5,10,15]
     test_size_ls =[0.2,0.3]
     get_result(data_id,output_path,feature_ids,models,input_datapath, n_iterations_ls,test_size_ls)
     

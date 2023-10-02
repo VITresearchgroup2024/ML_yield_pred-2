@@ -1,12 +1,32 @@
 import numpy as np
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split, GridSearchCV
+import copy
 
 from sklearn.model_selection import StratifiedShuffleSplit
 
 from skopt import BayesSearchCV
 
-
+def random_forest(X, y, test_size=0.2, n_iterations=1):
+    
+    
+    model_values =[]
+    expt_values =[]
+    # Iterate over test sets  
+    for i in range(n_iterations):
+        X_training, X_test, y_training, y_test = train_test_split(X, y, test_size=test_size, random_state=i)
+        
+        # Train the model and get predictions 
+        predictor = RandomForestRegressor(n_estimators=100)
+        pred = copy.deepcopy(predictor)
+        pred.fit(X_training, y_training)
+        y_pred = pred.predict(X_test)
+        
+        model_values.extend(y_pred)
+        expt_values.extend(y_test)
+        
+        return np.array(expt_values) ,np.array(model_values)
+                                       
 def random_forest_h_tuning_grid(X, y, stratification, additional_stratification,
                                         test_size=0.2, n_iterations=1):
     '''
