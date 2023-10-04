@@ -1,7 +1,7 @@
 import pandas as pd
 
-df = pd.read_csv("D:/Reaction optimization project/source code/DATA/Dataset1.5.csv")
-prod = pd.read_csv("D:/Reaction optimization project/source code/DFT/opti/coupling_partner/coupling_partner.csv")
+df = pd.read_csv("D:/Reaction optimization project/source code/DATA/Dataset1.5.csv") #ffull dataset pth
+prod = pd.read_csv("D:/Reaction optimization project/source code/DFT/opti/coupling_partner/coupling_partner.csv") #
 p = prod['Smiles'].to_list()
 prod = pd.read_csv("D:/Reaction optimization project/source code/DFT/opti/coupling_partner/coupling_partner_final.csv")
 d = prod['Smiles'].to_list()
