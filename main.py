@@ -6,7 +6,7 @@ import pandas as pd
 
 
 import os
-filepath ='D:/Reaction optimization project/source code'
+filepath ='C:/Users/DELL/Desktop/REACTION_OPTI'
 
 os.chdir(f"{filepath}")
 
@@ -30,8 +30,8 @@ def featurise(feature_id,dataset):
         X_fp, y_fp, DOI_fp, mechanisms_fp, origins_fp = drfp_ft.process_dataframe(dataset)
         return X_fp, y_fp, DOI_fp, mechanisms_fp
     elif feature_id == 'DFT':
-        data_path ="D:/Reaction optimization project/source code/Featurisation_methods/DFT/descriptor_data/"
-        dataset_path='D:/Reaction optimization project/source code/DATA/Dataset1.7.csv'
+        data_path =f"{filepath}/Featurisation_methods/DFT/descriptor_data/"
+        dataset_path=f'{filepath}/DATA/Dataset1.7.csv'
         X_dft, y_dft, DOI_dft, mechanisms_dft, origins_dft = featurize_main_data(dataset_path,data_path)
         return  X_dft, y_dft, DOI_dft, mechanisms_dft
     elif feature_id == 'RDkitFP':
@@ -217,7 +217,7 @@ def get_result(data_id,output_path,feature_ids,models_reg,model_types,input_data
 if __name__ == "__main__":
     input_datapath = filepath  #location of the folder containing datasets
     data_id = 'Dataset_test' #name of the dataset
-    output_path = 'D:/Reaction optimization project/source code/result'#location of fodder to save the results
+    output_path = f'{filepath}/result'#location of fodder to save the results
     model_types = [ 'classifier','regressor'] #'classifier','regressor'
     test_size_ls =[0.2]
     n_iterations_ls=[1]
