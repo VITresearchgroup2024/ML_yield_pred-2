@@ -216,11 +216,11 @@ def get_result(data_id,output_path,feature_ids,models_reg,model_types,input_data
               
 if __name__ == "__main__":
     input_datapath = filepath  #location of the folder containing datasets
-    data_id = 'Dataset_test' #name of the dataset
+    data_id = 'Dataset2.4' #name of the dataset
     output_path = 'D:/Reaction optimization project/source code/result'#location of fodder to save the results
     model_types = [ 'classifier','regressor'] #'classifier','regressor'
-    test_size_ls =[0.2]
-    n_iterations_ls=[1]
+    test_size_ls =[0.2,0.3]
+    n_iterations_ls=[5,10]
     stratified_split =[True,False]
     feature_ids =['DRFP' , 'RDkitFP' , 'RxnFP'] #possibile vaules :  
     models_reg = ['nural_net','random_forest' , 'random_forest_h_tuning_grid','random_forest_h_tuning_bayes_strat'] 
