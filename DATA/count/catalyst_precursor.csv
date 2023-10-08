@@ -1,0 +1,44 @@
+,catalyst_precursor
+[Cu]I,290
+CC[Zn]CC,260
+Cl[Fe](Cl)Cl,62
+Cl[Co]Cl,60
+O=C(O[Co]OC(C)=O)C .[O].[O].[O].[O],49
+Cl[Mn]Cl.O.O.O.O,42
+Cl[Fe](Cl)Cl.O.O.O.O.O.O,38
+[Cu]Br,29
+C[N@@]1([H])CC[N@@]([H])([Cu]12[N@@](C)([H])CC[N@]([H])2C)C.[Cl].[Cl],21
+C/C(=C/C(=O)C)/O.C/C(=C/C(=O)C)/O.O.[Cu] ,20
+CC1=[N]2C(C([N]([Cu]2(Br)[P](C3=CC=CC=C3)(C4=CC=CC=C4)C5=CC=CC=C5)=C(C)C=C6)=C6C=C7)=C7C=C1,13
+C/C(=C/C(=O)C)/O.C/C(=C/C(=O)C)/O.O.[Cu]  ,9
+Br[Cu]1([P](C2=CC=CC=C2)(C3=CC=CC=C3)C4=CC=CC=C4)[N]5=CC=CC6=C5C([N]1=CC=C7)=C7C=C6,8
+CC(=O)[O-].CC(=O)[O-].[Cu+2] ,7
+[Cu]Cl,4
+O=C(O[Cu]OC(C)=O)C,4
+Cl[Fe]Cl,2
+Br[Cu]Br,2
+Cl[Cu]Cl,2
+O=C(O[Zn]OC(C)=O)C,2
+O.O.O.O.O.O.Cl[Fe](Cl)Cl  ,1
+ C/C(=C/C(=O)C)/[O-].C/C(=C/C(=O)C)/[O-].C/C(=C/C(=O)C)/[O-].[Fe+3]  ,1
+[Zn]C(OOC(O[O])=O)=O,1
+Cl[Cu]Cl.O,1
+[Cu][Cu]=O,1
+FC([Cu]C(F)(F)F)(F)F.O=S(=O)=O.O=S(=O)=O,1
+[Cu]=O,1
+C/C(=C/C(=O)C)/O.C/C(=C/C(=O)C)/O.[Cu],1
+Br[Fe]Br,1
+O.O.O.O.O.[O-]S(=O)(=O)[O-].[Cu+2]  ,1
+O=S(=O)=[Cu](=O)=O,1
+O.O.Cl[Cu]Cl  ,1
+[Zn]S(=O)(OOS(=O)(O[O])=O)=O,1
+O=S(O[Cu]OS(=O)(C(F)(F)F)=O)(C(F)(F)F)=O,1
+Cl[Ni]Cl,1
+Cl[Pd]Cl,1
+ZnCl2,1
+Zn(OAc)2,1
+O=[Mn]=O,1
+[O-]S(=O)([O-])=O.O.[Mn+2],1
+CC([O-])=O.CC([O-])=O.O.O.O.O.[Mn+2],1
+Cl[Zn]Cl,1
+Cl[Cu],1

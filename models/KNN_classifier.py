@@ -38,13 +38,14 @@ def knn_classification_HPT(X, y, strat1, strat2,strat=False, test_size=0.2, n_it
 
         # Define the hyperparameter search space
         param_grid = {
-            'n_neighbors': [3, 5, 7],  # Number of neighbors to consider
+            'n_neighbors': [3, 5, 7,9],
+            'algorithm': ['auto', 'ball_tree', 'kd_tree', 'brute'],# Number of neighbors to consider
             'weights': ['uniform', 'distance'],  # Weighting scheme
             'p': [1, 2]  # Distance metric (1 for Manhattan, 2 for Euclidean)
         }
 
         # Perform GridSearchCV for hyperparameter tuning
-        grid_search = GridSearchCV(estimator=knn, param_grid=param_grid, cv=5, n_jobs=-1)
+        grid_search = GridSearchCV(estimator=knn, param_grid=param_grid,scoring='accuracy', cv=3, n_jobs=--1)
         grid_search.fit(X_train, y_train)
 
         # Get the best hyperparameters

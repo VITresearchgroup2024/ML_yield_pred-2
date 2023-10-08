@@ -41,7 +41,7 @@ def neural_network(X, y, stratification, additional_stratification, test_size, n
         X_train, X_test, y_train, y_test = train_test_split(
             X, y,test_size=test_size, random_state=i
         )
-
+        print(X_train)
         # Convert data to PyTorch tensors
         X_train = torch.Tensor(X_train)
         y_train = torch.Tensor(y_train)
@@ -98,9 +98,3 @@ def neural_network(X, y, stratification, additional_stratification, test_size, n
         x =str(x[0])
         new_model_val.append(x)
     return expt_values , new_model_val 
-
-
-
-
-
-

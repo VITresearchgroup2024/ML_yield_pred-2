@@ -55,7 +55,7 @@ def random_forest_h_tuning_grid(X, y, stratification, additional_stratification,
 
         # Perform grid search hyperparameter tuning using MAE as the scoring metric
         grid_search = GridSearchCV(estimator=rf, param_grid=param_grid,
-                                   scoring='neg_mean_absolute_error', cv=5, n_jobs=-1)
+                                   scoring='r2', cv=5, n_jobs=-1)
         grid_search.fit(X_train, y_train)
 
         # Get the best Random Forest model from the grid search
@@ -99,7 +99,7 @@ def random_forest_h_tuning_bayes_strat(X, y, stratification, additional_stratifi
 
         # Perform Bayesian hyperparameter tuning using MAE as the objective function
         bayes_search = BayesSearchCV(
-            rf, search_space, n_iter=30, cv=5, scoring='neg_mean_absolute_error', n_jobs=-1
+            rf, search_space, n_iter=30, cv=5, scoring='r2', n_jobs=-1
         )
         bayes_search.fit(X_train, y_train)
 

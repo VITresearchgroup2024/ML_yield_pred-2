@@ -30,8 +30,8 @@ def featurise(feature_id,dataset):
         X_fp, y_fp, DOI_fp, mechanisms_fp, origins_fp = drfp_ft.process_dataframe(dataset)
         return X_fp, y_fp, DOI_fp, mechanisms_fp
     elif feature_id == 'DFT':
-        data_path ="D:/Reaction optimization project/source code/Featurisation_methods/DFT/descriptor_data/"
-        dataset_path='D:/Reaction optimization project/source code/DATA/Dataset1.7.csv'
+        data_path =f"D:/Reaction optimization project/source code/Featurisation_methods/DFT/descriptor_data/"
+        dataset_path=f'D:/Reaction optimization project/source code/DATA/Dataset1.7.csv'
         X_dft, y_dft, DOI_dft, mechanisms_dft, origins_dft = featurize_main_data(dataset_path,data_path)
         return  X_dft, y_dft, DOI_dft, mechanisms_dft
     elif feature_id == 'RDkitFP':
@@ -216,19 +216,23 @@ def get_result(data_id,output_path,feature_ids,models_reg,model_types,input_data
               
 if __name__ == "__main__":
     input_datapath = filepath  #location of the folder containing datasets
-    data_id = 'Dataset2.4' #name of the dataset
-    output_path = 'D:/Reaction optimization project/source code/result'#location of fodder to save the results
-    model_types = [ 'classifier','regressor'] #'classifier','regressor'
-    test_size_ls =[0.2,0.3]
-    n_iterations_ls=[5,10]
-    stratified_split =[True,False]
-    feature_ids =['DRFP' , 'RDkitFP' , 'RxnFP'] #possibile vaules :  
-    models_reg = ['nural_net','random_forest' , 'random_forest_h_tuning_grid','random_forest_h_tuning_bayes_strat'] 
-    #possible values : 'nural_net','random_forest' , 'random_forest_h_tuning_grid','random_forest_h_tuning_bayes_strat','neural_network_with_attention_hyperparameter_tuning'
-    models_classi = ['knn_classification','knn_classification_HPT']
-    get_result(data_id,output_path,feature_ids,models_reg,model_types,input_datapath,n_iterations_ls,test_size_ls,models_classi,stratified_split)
-
+    Dataset_id0 = ['Dataset']
+    Dataset_ids1 = ['subset/subset_substrate', 'subset/subset_coupling_partner', 'subset/subset_Solvent', 'subset/subset_catalyst_precursor', 'subset/subset_reagent', 'subset/subset_ligand', 'subset/subset_PRODUCT']
+    Dataset_ids2  = ['Dataset','Dataset_subset_count_1', 'Dataset_subset_count_2', 'Dataset_subset_count_3', 'Dataset_subset_count_5', 'Dataset_subset_count_7', 'Dataset_subset_count_9', 'Dataset_subset_count_10']
+ #name of the dataset
+    for data_id in Dataset_id0 :
+        output_path = f'{filepath}/result'#location of fodder to save the results
+        model_types = ['classifier','regressor'] #'classifier','regressor'
+        test_size_ls =[0.2,0.3]
+        n_iterations_ls=[5,10]
+        stratified_split =[True,False]
+        feature_ids =['DRFP'] #possibile vaules :  
+        models_reg = ['random_forest' , 'random_forest_h_tuning_grid'] 
+        #possible values : 'nural_net','random_forest' , 'random_forest_h_tuning_grid','random_forest_h_tuning_bayes_strat','neural_network_with_attention_hyperparameter_tuning'
+        models_classi = ['knn_classification','knn_classification_HPT']
+        get_result(data_id,output_path,feature_ids,models_reg,model_types,input_datapath,n_iterations_ls,test_size_ls,models_classi,stratified_split)
     
+        
 
 
  

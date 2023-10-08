@@ -13,10 +13,12 @@ def draw_molecule(smiles, filename):
         print("Invalid SMILES string:", smiles)
 
 
-data = pd.read_csv(f"D:/Reaction optimization project/source code/DATA/substrate.csv")
+data = pd.read_csv(f"C:/Users/vivek/OneDrive/Desktop/data_work/product_full.csv")
 column = 'PRODUCT'
-os.mkdir(f"D:/Reaction optimization project/source code/test/imgs2")
+
+
+os.mkdir(f"C:/Users/vivek/OneDrive/Desktop/data_work/count/product_full")
 ls = data[column]
 for i, smiles in enumerate(ls):
-    filename = f"D:/Reaction optimization project/source code/test/imgs2/{i+1}.png"
+    filename = f"C:/Users/vivek/OneDrive/Desktop/data_work/count/product_full/{i+1}.png"
     draw_molecule(smiles, filename)
