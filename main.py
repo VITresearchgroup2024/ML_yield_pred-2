@@ -19,7 +19,7 @@ from models.Nuralnetwork.nural_net import neural_network
 from models.Nuralnetwork.nural_net_attention import neural_network_with_attention_hyperparameter_tuning as nnaht
 from Featurisation_methods.Rxnfp.get_rxnfp_features import rxn_featurise
 from util.visualization2 import visualise_reg ,visualise_classifier
-from analysis import random_split
+
 from models.random_forest.random_forest import random_forest_h_tuning_grid,random_forest_h_tuning_bayes_strat,random_forest
 from models.KNN_classifier import knn_classification_HPT ,knn_classification
 
@@ -90,7 +90,7 @@ def get_result(data_id,output_path,feature_ids,models_reg,model_types,input_data
                                               , columns =['Dataset','model_type','featurisation_method','epoch','learnin_rate','test_size',
                                                          'iterations','Stratification_type','RMSE','MAE','Correlation','Accuracy','Precession'])
               
-          summary.to_csv(f'{output_path}/{data_id}_SUMMARY.csv') 
+          summary.to_csv(f'{output_path}/{data_id}/{data_id}_SUMMARY.csv') 
           
         
 
@@ -241,22 +241,31 @@ if __name__ == "__main__":
     Dataset_id0 = ['Dataset'] #name of the dataset
     Dataset_ids1 = ['subset_substrate', 'subset_coupling_partner', 'subset_Solvent', 'subset_catalyst_precursor', 'subset_reagent', 'subset_ligand', 'subset_PRODUCT']
     Dataset_ids2  = ['Dataset_subset_count_1', 'Dataset_subset_count_2', 'Dataset_subset_count_3', 'Dataset_subset_count_5', 'Dataset_subset_count_7']
+    full_summary = pd.DataFrame()
+    for data_id in Dataset_ids1:
+     try:
+        output_path = f'{filepath}/result'  # Location to save results
+        model_types = ['classifier', 'regressor']
+        test_size_ls = [0.2, 0.3]
+        n_iterations_ls = [10, 5]
+        stratification_types = ['no_stratification'] #possible Values : 'mechanism', 'substrate_class', 'coupling_partner_class', 'no_stratification'
+        feature_ids = ['DRFP', 'RDkitFP']
+        models_reg = ['random_forest', 'random_forest_h_tuning_grid']
+        models_classi = ['knn_classification', 'knn_classification_HPT']
 
-    for data_id in Dataset_id0 :
-        output_path = f'{filepath}/result'#location of fodder to save the results
-        model_types = ['classifier','regressor'] #'classifier','regressor'
-        test_size_ls =[0.2,0.3]
-        n_iterations_ls=[10,5]
-        stratification_types =['mechanism','substrate_class','coupling_partner_class','no_stratification'] #possible values : 'mechanism','substrate_class','coupling_partner_class','no_stratification'
-        feature_ids =['DRFP','RDkitFP'] #possibile vaules :  
-        models_reg = ['random_forest' , 'random_forest_h_tuning_grid'] 
-        #possible values : 'nural_net','random_forest' , 'random_forest_h_tuning_grid','random_forest_h_tuning_bayes_strat','neural_network_with_attention_hyperparameter_tuning'
-        models_classi = ['knn_classification','knn_classification_HPT']
-        summary = get_result(data_id,output_path,feature_ids,models_reg,model_types,input_datapath,n_iterations_ls,test_size_ls,models_classi,stratification_types)
-        full_summary = pd.DataFrame()
+        summary = get_result(data_id, output_path, feature_ids, models_reg, model_types, input_datapath, n_iterations_ls, test_size_ls, models_classi, stratification_types)
+
+        if 'Error' in summary:
+            print(f"Skipping {data_id} due to an error.")
+            continue
+
         full_summary = full_summary.merge(summary)
-    full_summary.to_csv(f'{filepath}/result/full_summary_id0.csv')
-        
+     except Exception as e:
+        print(f"An error occurred for {data_id}: {str(e)}")
+        continue  # Skip to the next data_id
+
+full_summary.to_csv(f'{filepath}/result/full_summary_ids1.csv')
+   
 
 
  
