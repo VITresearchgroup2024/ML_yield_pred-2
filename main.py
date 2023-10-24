@@ -196,7 +196,7 @@ def get_result(data_id,output_path,feature_ids,models_reg,model_types,input_data
                                 append_summary(data_id,model,feature_id,test_size,n_iterations,rmse,mae, r2,model_type=model_type,strat_type=strat_type) 
                             
                             elif model == 'nural_net':
-                               for epoch in range(800,1000,200):
+                               for epoch in range(800,1200,200):
                                    lr = 0.0001
                                    expt_yield,pred_yield =  neural_network(x,y,strat,test_size, n_iterations,epoch,lr)
                                    df =pd.DataFrame(zip(expt_yield,pred_yield), columns = ['Yields','Predicted Yields'])
@@ -242,15 +242,15 @@ if __name__ == "__main__":
     Dataset_ids1 = ['subset_substrate', 'subset_coupling_partner', 'subset_Solvent', 'subset_catalyst_precursor', 'subset_reagent', 'subset_ligand', 'subset_PRODUCT']
     Dataset_ids2  = ['Dataset_subset_count_1', 'Dataset_subset_count_2', 'Dataset_subset_count_3', 'Dataset_subset_count_5', 'Dataset_subset_count_7']
     full_summary = pd.DataFrame()
-    for data_id in Dataset_ids1:
+    for data_id in Dataset_id0:
      try:
         output_path = f'{filepath}/result'  # Location to save results
         model_types = ['classifier', 'regressor']
         test_size_ls = [0.2, 0.3]
         n_iterations_ls = [10, 5]
-        stratification_types = ['no_stratification'] #possible Values : 'mechanism', 'substrate_class', 'coupling_partner_class', 'no_stratification'
+        stratification_types = ['mechanism', 'substrate_class', 'coupling_partner_class', 'no_stratification'] #possible Values : 'mechanism', 'substrate_class', 'coupling_partner_class', 'no_stratification'
         feature_ids = ['DRFP', 'RDkitFP']
-        models_reg = ['random_forest', 'random_forest_h_tuning_grid']
+        models_reg = ['random_forest', 'random_forest_h_tuning_grid','nural_net']
         models_classi = ['knn_classification', 'knn_classification_HPT']
 
         summary = get_result(data_id, output_path, feature_ids, models_reg, model_types, input_datapath, n_iterations_ls, test_size_ls, models_classi, stratification_types)
@@ -262,9 +262,9 @@ if __name__ == "__main__":
         full_summary = full_summary.merge(summary)
      except Exception as e:
         print(f"An error occurred for {data_id}: {str(e)}")
-        continue  # Skip to the next data_id
+        continue  
 
-full_summary.to_csv(f'{filepath}/result/full_summary_ids1.csv')
+full_summary.to_csv(f'{filepath}/result/full_summary_id0.csv')
    
 
 
