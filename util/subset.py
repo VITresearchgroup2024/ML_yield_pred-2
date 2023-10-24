@@ -1,13 +1,13 @@
 import pandas as pd
 import os 
 
-def count(data):
+def count(data,path):
     
     column_names = data.columns.to_list() 
     
     for column_name in column_names :
      x = data[column_name].value_counts()
-     x.to_csv(f"D:/Reaction optimization project/source code/DATA/count/{column_name}.csv")
+     x.to_csv(f"{path}/{column_name}.csv")
 
 def create_subsets(df, column_name,count):
     # Count the repetitions of unique values in the specified column
@@ -25,22 +25,25 @@ def create_subsets(df, column_name,count):
 
 input_csv_path = 'D:/Reaction optimization project/source code/DATA/Dataset.csv'
 data = pd.read_csv(input_csv_path)
-'''
-count(data)
-column_names = data.columns.to_list() 
+if not os.path.exists("D:/Reaction optimization project/source code/DATA//count"):
+ os.makedirs("D:/Reaction optimization project/source code/DATA//count")
+path ="D:/Reaction optimization project/source code/DATA//count"
+count(data,path)
+
+column_names = ['substrate','coupling_partner','Solvent','catalyst_precursor','reagent','ligand','PRODUCT']
 ids =[]
 for column_name in column_names :
-    subset_datapath =f"D:/Reaction optimization project/source code/DATA/subset/subset_{column_name}.csv"
-    ids.append(f'subset/subset_{column_name}')
+    subset_datapath =f"D:/Reaction optimization project/source code/DATA/subset_{column_name}.csv"
+    ids.append(f'subset_{column_name}')
     subset = create_subsets(data,column_name,count=5)
     subset.to_csv(subset_datapath)   
 print(ids)
-'''
+
 ids2 = []
-countl =[1,2,3,5,7,9,10] 
+countl =[1,2,3,5,7] 
 for c in countl:
     
-    column_names = ['substrate','coupling_partner','Solvent','catalyst_precursor','reagent','ligand','PRODUCT']
+    
     
     subser =pd.DataFrame
     for column_name in column_names :

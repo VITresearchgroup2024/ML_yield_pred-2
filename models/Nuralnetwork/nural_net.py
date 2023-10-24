@@ -20,14 +20,14 @@ class NeuralNetwork(nn.Module):
         x = self.fc3(x)
         return x
 
-def neural_network(X, y, stratification, additional_stratification, test_size, n_iterations,epochl,lr):
+def neural_network(X, y, stratification, test_size, n_iterations,epochl,lr):
     """Train a neural network regressor using PyTorch and return the correlation coefficient.
     
     Parameters:
         X (np array): Features of the dataset, of shape (n_samples, n_features).
         y (np array): Labels of the dataset.
         stratification (np.array): Additional labels to use for the baseline.
-        additional_stratification (np.array): Additional labels that we need to keep track of.
+        
         test_size (float): Test size (between 0 and 1) at which to perform the analysis.
         n_iterations (int): Number of iterations.
 
@@ -39,7 +39,7 @@ def neural_network(X, y, stratification, additional_stratification, test_size, n
 
     for i in range(n_iterations):
         X_train, X_test, y_train, y_test = train_test_split(
-            X, y,test_size=test_size, random_state=i
+            X, y,test_size=test_size, random_state=i,stratify=stratification
         )
         print(X_train)
         # Convert data to PyTorch tensors

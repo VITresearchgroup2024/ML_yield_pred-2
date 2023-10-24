@@ -35,8 +35,10 @@ def process_dataframe(df):
         DOIs.append(row["DOI"])
         mechanisms.append(row["Mechanism"])
         origins.append(origin_mapping(row['origin']))
-    
-    return np.array(X), np.array(yields), np.array(DOIs), np.array(mechanisms), np.array(origins)
+        
+    substrate_class = df['substrate_class']
+    coupling_partner_class = df['coupling_partner_class']
+    return np.array(X), np.array(yields), np.array(DOIs), np.array(mechanisms), np.array(origins),np.array(substrate_class), np.array(coupling_partner_class)
 
 
 def rxnfp(rxn_smarts, radius=2):

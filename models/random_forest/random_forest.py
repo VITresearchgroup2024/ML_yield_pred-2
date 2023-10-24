@@ -7,14 +7,14 @@ from sklearn.model_selection import StratifiedShuffleSplit
 
 from skopt import BayesSearchCV
 
-def random_forest(X, y, test_size=0.2, n_iterations=1):
+def random_forest(X, y,stratification, test_size=0.2, n_iterations=1):
     
     
     model_values =[]
     expt_values =[]
     # Iterate over test sets  
     for i in range(n_iterations):
-        X_training, X_test, y_training, y_test = train_test_split(X, y, test_size=test_size, random_state=i)
+        X_training, X_test, y_training, y_test = train_test_split(X, y, test_size=test_size, random_state=i,stratify=stratification)
         
         # Train the model and get predictions 
         predictor = RandomForestRegressor(n_estimators=100)
@@ -27,7 +27,7 @@ def random_forest(X, y, test_size=0.2, n_iterations=1):
         
         return np.array(expt_values) ,np.array(model_values)
                                        
-def random_forest_h_tuning_grid(X, y, stratification, additional_stratification,
+def random_forest_h_tuning_grid(X, y, stratification,
                                         test_size=0.2, n_iterations=1):
     '''
     a function that performs hyperparameter tuning for a Random Forest model to minimize
@@ -40,7 +40,7 @@ def random_forest_h_tuning_grid(X, y, stratification, additional_stratification,
     for i in range(n_iterations):
        
         X_train, X_test, y_train, y_test = train_test_split(
-            X, y, test_size=test_size ,random_state=i)
+            X, y, test_size=test_size ,random_state=i,stratify=stratification)
 
         # Define the Random Forest Regressor
         rf = RandomForestRegressor()
@@ -73,22 +73,16 @@ def random_forest_h_tuning_grid(X, y, stratification, additional_stratification,
 
 
 
-def random_forest_h_tuning_bayes_strat(X, y, stratification, additional_stratification,
+def random_forest_h_tuning_bayes_strat(X, y, stratification,
                                         test_size=0.2, n_iterations=1):
     true_values = []
     model_values = []
-
-    for i in range(n_iterations):
-        # Create a StratifiedShuffleSplit object to maintain stratification based on `stratification`
-        sss = StratifiedShuffleSplit(n_splits=1, test_size=test_size, random_state=i)
-
-        for train_index, test_index in sss.split(X, stratification):
-            X_train, X_test = X[train_index], X[test_index]
-            y_train, y_test = y[train_index], y[test_index]
-
+    for i in n_iterations:
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size ,random_state=i,stratify=stratification)
+    
         # Define the Random Forest Regressor with hyperparameters to tune
         rf = RandomForestRegressor()
-
+    
         # Define the search space for hyperparameter tuning
         search_space = {
             'n_estimators': (10, 1000),
@@ -96,25 +90,25 @@ def random_forest_h_tuning_bayes_strat(X, y, stratification, additional_stratifi
             'min_samples_split': (2, 20),
             'min_samples_leaf': (1, 20)
         }
-
+    
         # Perform Bayesian hyperparameter tuning using MAE as the objective function
         bayes_search = BayesSearchCV(
             rf, search_space, n_iter=30, cv=5, scoring='r2', n_jobs=-1
         )
         bayes_search.fit(X_train, y_train)
-
+    
         # Get the best hyperparameters and their corresponding MAE
         best_params = bayes_search.best_params_
         best_mae = -bayes_search.best_score_
-
+    
         # Train a Random Forest model with the best hyperparameters on the full training set
         best_rf = RandomForestRegressor(**best_params)
         best_rf.fit(X_train, y_train)
-
+    
         # Make predictions on the test set
         y_true = y_test
         y_pred = best_rf.predict(X_test)
-
+    
         # Append true values and model predictions
         true_values.extend(y_true)
         model_values.extend(y_pred)

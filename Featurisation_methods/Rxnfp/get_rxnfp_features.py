@@ -27,7 +27,9 @@ def rxn_featurise(data):
     DOI_rxnfp = np.array(data.DOI) 
     mechanisms_rxnfp = np.array(data["Mechanism"])
     origins_rxnfp = np.array(data.origin) 
+    substrate_class = data['substrate_class']
+    coupling_partner_class = data['coupling_partner_class']
     
-    return x_rxnfp,y_rxnfp,DOI_rxnfp,mechanisms_rxnfp,origins_rxnfp
+    return x_rxnfp,y_rxnfp,DOI_rxnfp,mechanisms_rxnfp,origins_rxnfp ,np.array(substrate_class), np.array(coupling_partner_class)
     
 

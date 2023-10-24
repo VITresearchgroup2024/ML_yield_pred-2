@@ -20,20 +20,16 @@ def preprocess_yield(y):
             classes.append("GOOD YIELD")
     return np.array(classes)
 
-def knn_classification_HPT(X, y, strat1, strat2,strat=False, test_size=0.2, n_iterations=5):
+def knn_classification_HPT(X, y, stratification,test_size=0.2, n_iterations=5):
     true_values =[]
     model_values =[]
     y=preprocess_yield(y)
 
     for i in range(n_iterations):
-        if strat :
-            # Split the data into training and testing sets while maintaining stratification
-            X_train, X_test, y_train, y_test = train_test_split(
-                X, y, test_size=test_size, random_state=i, stratify=strat1)
-        else :
-            X_train, X_test, y_train, y_test = train_test_split(
-                X, y, test_size=test_size, random_state=i)
-  
+        
+        X_train, X_test, y_train, y_test = train_test_split(
+                X, y, test_size=test_size, random_state=i, stratify=stratification)
+
         knn = KNeighborsClassifier()
 
         # Define the hyperparameter search space
@@ -45,7 +41,7 @@ def knn_classification_HPT(X, y, strat1, strat2,strat=False, test_size=0.2, n_it
         }
 
         # Perform GridSearchCV for hyperparameter tuning
-        grid_search = GridSearchCV(estimator=knn, param_grid=param_grid,scoring='accuracy', cv=3, n_jobs=--1)
+        grid_search = GridSearchCV(estimator=knn, param_grid=param_grid,scoring='accuracy', cv=3, n_jobs=-1)
         grid_search.fit(X_train, y_train)
 
         # Get the best hyperparameters
@@ -66,18 +62,13 @@ def knn_classification_HPT(X, y, strat1, strat2,strat=False, test_size=0.2, n_it
 
 
 
-def knn_classification(X, y, strat1, strat2,strat=True, test_size=0.2, n_iterations=5):
+def knn_classification(X, y, stratification,test_size=0.2, n_iterations=5):
     true_values =[]
     model_values =[]
     y=preprocess_yield(y)
     for i in range(n_iterations):
-        if strat :
-            # Split the data into training and testing sets while maintaining stratification
-            X_train, X_test, y_train, y_test = train_test_split(
-                X, y, test_size=test_size, random_state=i, stratify=strat1)
-        else :
-            X_train, X_test, y_train, y_test = train_test_split(
-                X, y, test_size=test_size, random_state=i)
+        X_train, X_test, y_train, y_test = train_test_split(
+                X, y, test_size=test_size, random_state=i, stratify=stratification)
 
      
         knn = KNeighborsClassifier(n_neighbors=5, weights='uniform', p=2)  

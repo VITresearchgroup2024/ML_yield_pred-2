@@ -1,2 +1,0 @@
-,Dataset,model_type,featurisation_method,epoch,learnin_rate,test_size,iterations,Stratified_split,RMSE,MAE,Correlation,Accuracy,Precession
-0,Dataset_full,knn_classification,DRFP,,,0.2,5,,,,,0.47668393782383417,0.4228754940711462

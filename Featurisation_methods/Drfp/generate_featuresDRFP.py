@@ -20,13 +20,15 @@ def process_dataframe(df):
     cps = df.Mechanism.to_list()
     # get data origin
     origins = df.origin.to_list()
+    substrate_class = df['substrate_class']
+    coupling_partner_class = df['coupling_partner_class']
     
     yields = []
     for i, row in df.iterrows():
         yield_isolated = process_yield(row["isolated_yield"])
         yields.append(yield_isolated)
         
-    return np.array(X), np.array(yields), np.array(DOIs), np.array(cps), np.array(origins)
+    return np.array(X), np.array(yields), np.array(DOIs), np.array(cps), np.array(origins),np.array(substrate_class), np.array(coupling_partner_class)
         
 #reaction parameters used for the DRFP featurisation
 reaction_reagents_reactants = ['substrate', 'coupling_partner',

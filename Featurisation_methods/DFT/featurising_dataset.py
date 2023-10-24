@@ -107,10 +107,12 @@ def featurize_main_data(dataset_path,data_path):
     DOI = df['DOI'].to_list()
     mechanism = df['Mechanism'].to_list()
     origin = df['origin'].to_list()
+    substrate_class = df['substrate_class']
+    coupling_partner_class = df['coupling_partner_class']
     arr = np.array(X)
     X = np.nan_to_num(arr, nan=0.0)
     
-    return X, np.array(yields), np.array(DOI), np.array(mechanism), np.array(origin)
+    return X, np.array(yields), np.array(DOI), np.array(mechanism), np.array(origin) ,np.array(substrate_class), np.array(coupling_partner_class)
     
     
         
