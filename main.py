@@ -121,17 +121,17 @@ def get_result(data_id,output_path,feature_ids,models_reg,model_types,input_data
                              if model_cl == 'knn_classification_HPT' :
                                expt_yield,pred_yield = knn_classification_HPT(X, y, strat,test_size=test_size, n_iterations=n_iterations)
                                df =pd.DataFrame(zip(expt_yield,pred_yield), columns = ['Yields','Predicted Yields'])
-                               result_csv_path =f"{output_path}/{data_id}/classifier/csv_results/random_split_{feature_id}_model={model_cl}__testsize_{test_size}_stratification_type_{strat_type}.csv"
+                               result_csv_path =f"{output_path}/{data_id}/classifier/csv_results/random_split_{feature_id}_model={model_cl}__testsize_{test_size}_stratification_type_{strat_type}_iteration={n_iterations}.csv"
                                df.to_csv(result_csv_path)   
-                               image_path = f"{output_path}/{data_id}/classifier/img_results/random_split_{feature_id}_model={model_cl}_testsize_{test_size}_stratification_type_{strat_type}.png"
+                               image_path = f"{output_path}/{data_id}/classifier/img_results/random_split_{feature_id}_model={model_cl}_testsize_{test_size}_stratification_type_{strat_type}_iteration={n_iterations}.png"
                                accuracy , precession = visualise_classifier(result_csv_path , image_path)
                                append_summary(data_id,model_cl,feature_id,test_size,n_iterations,accuracy=accuracy,precission=precession,model_type=model_type,strat_type=strat_type) 
                              elif model_cl == 'knn_classification' :
                                expt_yield,pred_yield = knn_classification(X, y, strat,test_size=test_size, n_iterations=n_iterations)
                                df =pd.DataFrame(zip(expt_yield,pred_yield), columns = ['Yields','Predicted Yields'])
-                               result_csv_path =f"{output_path}/{data_id}/classifier/csv_results/random_split_{feature_id}_model={model_cl}_testsize_{test_size}_stratification_type_{strat_type}.csv"
+                               result_csv_path =f"{output_path}/{data_id}/classifier/csv_results/random_split_{feature_id}_model={model_cl}_testsize_{test_size}_stratification_type_{strat_type}_iteration={n_iterations}.csv"
                                df.to_csv(result_csv_path)   
-                               image_path = f"{output_path}/{data_id}/classifier/img_results/random_split_{feature_id}_model={model_cl}_testsize_{test_size}_stratification_type_{strat_type}.png"
+                               image_path = f"{output_path}/{data_id}/classifier/img_results/random_split_{feature_id}_model={model_cl}_testsize_{test_size}_stratification_type_{strat_type}_iteration={n_iterations}.png"
                                accuracy , precession = visualise_classifier(result_csv_path , image_path)
                                append_summary(data_id,model_cl,feature_id,test_size,n_iterations,accuracy=accuracy,precission=precession,model_type=model_type,strat_type=strat_type) 
            
@@ -165,33 +165,33 @@ def get_result(data_id,output_path,feature_ids,models_reg,model_types,input_data
                             if model == 'random_forest_h_tuning_bayes_strat' :
                                 expt_yield,pred_yield = random_forest_h_tuning_bayes_strat(x,y,strat,test_size, n_iterations)
                                 df =pd.DataFrame(zip(expt_yield,pred_yield), columns = ['Yields','Predicted Yields'])
-                                result_csv_path =f"{output_path}/{data_id}/regressor/csv_result/random_split_{feature_id}_model={model}_testsize_{test_size}_stratification_type_{strat_type}.csv"
+                                result_csv_path =f"{output_path}/{data_id}/regressor/csv_result/random_split_{feature_id}_model={model}_testsize_{test_size}_stratification_type_{strat_type}_iteration={n_iterations}.csv"
                                 df.to_csv(result_csv_path)
-                                image_path = f"{output_path}/{data_id}/regressor/img_result/random_split_{feature_id}_model={model}_testsize_{test_size}_stratification_type_{strat_type}.png"   
+                                image_path = f"{output_path}/{data_id}/regressor/img_result/random_split_{feature_id}_model={model}_testsize_{test_size}_stratification_type_{strat_type}_iteration={n_iterations}.png"   
                                 rmse , mae , r2 = visualise_reg(result_csv_path, image_path)
                                 append_summary(data_id,model,feature_id,test_size,n_iterations,rmse,mae, r2,model_type=model_type,strat_type=strat_type)
                             elif model == 'random_forest_h_tuning_grid' :
                                 expt_yield,pred_yield =  random_forest_h_tuning_grid(x,y,strat,test_size,n_iterations)
                                 df =pd.DataFrame(zip(expt_yield,pred_yield), columns = ['Yields','Predicted Yields'])
-                                result_csv_path =f"{output_path}/{data_id}/regressor/csv_result/random_split_{feature_id}_model={model}_testsize_{test_size}_stratification_type_{strat_type}.csv"
+                                result_csv_path =f"{output_path}/{data_id}/regressor/csv_result/random_split_{feature_id}_model={model}_testsize_{test_size}_stratification_type_{strat_type}_iteration={n_iterations}.csv"
                                 df.to_csv(result_csv_path)
-                                image_path = f"{output_path}/{data_id}/regressor/img_result/random_split_{feature_id}_model={model}_testsize_{test_size}_stratification_type_{strat_type}.png"   
+                                image_path = f"{output_path}/{data_id}/regressor/img_result/random_split_{feature_id}_model={model}_testsize_{test_size}_stratification_type_{strat_type}_iteration={n_iterations}.png"   
                                 rmse , mae , r2 = visualise_reg(result_csv_path, image_path)
                                 append_summary(data_id,model,feature_id,test_size,n_iterations,rmse,mae, r2,model_type=model_type,strat_type=strat_type)
                             elif model == 'random_forest':
                                 expt_yield, pred_yield = random_forest(x,y,strat, test_size ,n_iterations=n_iterations)
                                 df =pd.DataFrame(zip(expt_yield,pred_yield), columns = ['Yields','Predicted Yields'])
-                                result_csv_path =f"{output_path}/{data_id}/regressor/csv_result/random_split_{feature_id}_model={model}_testsize_{test_size}_stratification_type_{strat_type}.csv"
+                                result_csv_path =f"{output_path}/{data_id}/regressor/csv_result/random_split_{feature_id}_model={model}_testsize_{test_size}_stratification_type_{strat_type}_iteration={n_iterations}.csv"
                                 df.to_csv(result_csv_path)
-                                image_path = f"{output_path}/{data_id}/regressor/img_result/random_split_{feature_id}_model={model}_testsize_{test_size}_stratification_type_{strat_type}.png"   
+                                image_path = f"{output_path}/{data_id}/regressor/img_result/random_split_{feature_id}_model={model}_testsize_{test_size}_stratification_type_{strat_type}_iteration={n_iterations}.png"   
                                 rmse , mae , r2 = visualise_reg(result_csv_path, image_path)
                                 append_summary(data_id,model,feature_id,test_size,n_iterations,rmse,mae, r2,model_type=model_type,strat_type=strat_type)
                             elif model == 'neural_network_with_attention_hyperparameter_tuning':
                                 expt_yield, pred_yield = nnaht(x,y,strat,test_size ,n_iterations=n_iterations)
                                 df =pd.DataFrame(zip(expt_yield,pred_yield), columns = ['Yields','Predicted Yields'])
-                                result_csv_path =f"{output_path}/{data_id}/regressor/csv_result/random_split_{feature_id}_model={model}_testsize_{test_size}_stratification_type_{strat_type}.csv"
+                                result_csv_path =f"{output_path}/{data_id}/regressor/csv_result/random_split_{feature_id}_model={model}_testsize_{test_size}_stratification_type_{strat_type}_iteration={n_iterations}.csv"
                                 df.to_csv(result_csv_path)
-                                image_path = f"{output_path}/{data_id}/regressor/img_result/random_split_{feature_id}_model={model}_testsize_{test_size}_stratification_type_{strat_type}.png"   
+                                image_path = f"{output_path}/{data_id}/regressor/img_result/random_split_{feature_id}_model={model}_testsize_{test_size}_stratification_type_{strat_type}_iteration={n_iterations}.png"   
                                 rmse , mae , r2 = visualise_reg(result_csv_path, image_path)
                                 append_summary(data_id,model,feature_id,test_size,n_iterations,rmse,mae, r2,model_type=model_type,strat_type=strat_type) 
                             
@@ -200,9 +200,9 @@ def get_result(data_id,output_path,feature_ids,models_reg,model_types,input_data
                                    lr = 0.0001
                                    expt_yield,pred_yield =  neural_network(x,y,strat,test_size, n_iterations,epoch,lr)
                                    df =pd.DataFrame(zip(expt_yield,pred_yield), columns = ['Yields','Predicted Yields'])
-                                   result_csv_path =f"{output_path}/{data_id}/regressor/csv_result/random_split_{feature_id}_model={model}_epoch={epoch}__lr={lr}_testsize_{test_size}_stratification_type_{strat_type}.csv"
+                                   result_csv_path =f"{output_path}/{data_id}/regressor/csv_result/random_split_{feature_id}_model={model}_epoch={epoch}__lr={lr}_testsize_{test_size}_stratification_type_{strat_type}_iteration={n_iterations}.csv"
                                    df.to_csv(result_csv_path)
-                                   image_path = f"{output_path}/{data_id}/regressor/img_result/random_split_{feature_id}_model={model}_epoch={epoch}__lr={lr}_testsize_{test_size}_stratification_type_{strat_type}.png"   
+                                   image_path = f"{output_path}/{data_id}/regressor/img_result/random_split_{feature_id}_model={model}_epoch={epoch}__lr={lr}_testsize_{test_size}_stratification_type_{strat_type}_iteration={n_iterations}.png"   
                                    rmse , mae , r2 = visualise_reg(result_csv_path, image_path)
                                    epoch_ls.append(epoch)
                                    lr_ls.append(lr)
