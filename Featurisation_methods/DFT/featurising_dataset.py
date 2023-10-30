@@ -4,11 +4,11 @@ import numpy as np
 from sklearn.preprocessing import OneHotEncoder
 
 data_path ="D:/Reaction optimization project/source code/DFT/descriptor_data/"
-dataset_path='D:/Reaction optimization project/source code/DATA/Dataset1.4 (coupling class corrected).csv'
+dataset='D:/Reaction optimization project/source code/DATA/Dataset1.4 (coupling class corrected).csv'
 
 
 
-def featurize_smile(descrip_data_path,dataset_path,column_name):
+def featurize_smile(descrip_data_path,dataset,column_name):
   
   '''
       the function converts each smile to an array of features obtained
@@ -16,7 +16,7 @@ def featurize_smile(descrip_data_path,dataset_path,column_name):
       
       input parameters
       descrip_data_path = path of the csv file cotaining the descriptor data of each class of molecule
-      dataset_path =path to main data in csv format
+      dataset = main data 
       column name = name of class of molecule such as ligand,substrate etc
       
       returns
@@ -26,7 +26,7 @@ def featurize_smile(descrip_data_path,dataset_path,column_name):
   '''
       
   descriptor_data = pd.read_csv(descrip_data_path, sep=',', index_col=0)
-  df = pd.read_csv(dataset_path)
+  df = dataset
 
   # Convert the index of descriptor DataFrame to a list
   smile_index_list = descriptor_data.index.to_list()
@@ -44,20 +44,20 @@ def featurize_smile(descrip_data_path,dataset_path,column_name):
           Nan_index.append(i)
        i=i+1      
           
-  #print(f"index with NaN values for {column_name} \n {Nan_index} ")        
+  print(f"index with NaN values for {column_name} \n {Nan_index} ")        
   return descriptor_array
 
 # Converts a list of integers or strings to a one hot featurisation
-def one_hot_encoding(dataset_path,column_name):
-    df = pd.read_csv(dataset_path)
+def one_hot_encoding(dataset,column_name):
+    df = dataset
     enc = OneHotEncoder(sparse=False)
     column_data = np.array(df[column_name]).reshape(-1,1)
     enc.fit(column_data)
     descriptor_array = enc.transform(column_data)
     return descriptor_array
 
-def physical_data_preprocess(dataset_path):
-    df= pd.read_csv(dataset_path)
+def physical_data_preprocess(dataset):
+    df= dataset
     
     #time
     time = []
@@ -80,23 +80,23 @@ def physical_data_preprocess(dataset_path):
     return time , temp , equvalent
     
     
-def featurize_main_data(dataset_path,data_path):
+def featurize_main_data(dataset,data_path):
     
     # DFT descriptors
-    ligands=featurize_smile(data_path + 'ligand_descriptors.csv',dataset_path,'ligand')   
-    substrate=featurize_smile(data_path + 'substrate_descriptors.csv',dataset_path,'substrate')
-    coupling_partner=featurize_smile(data_path + 'coupling_partner_descriptors.csv',dataset_path,'coupling_partner')
-    product=featurize_smile(data_path + 'Product_descriptors.csv',dataset_path,'PRODUCT')
+    ligands=featurize_smile(data_path + 'ligand_descriptors.csv',dataset,'ligand')   
+    substrate=featurize_smile(data_path + 'Substrate_descriptors.csv',dataset,'substrate')
+    coupling_partner=featurize_smile(data_path + 'Coupling_descriptors.csv',dataset,'coupling_partner')
+    product=featurize_smile(data_path + 'Product_descriptors.csv',dataset,'PRODUCT')
     
     # one hot encoding
-    catalyst_precursor=one_hot_encoding(dataset_path,'catalyst_precursor')
-    reagent=one_hot_encoding(dataset_path,'reagent')
-    solvent=one_hot_encoding(dataset_path,'Solvent')
+    catalyst_precursor=one_hot_encoding(dataset,'catalyst_precursor')
+    reagent=one_hot_encoding(dataset,'reagent')
+    solvent=one_hot_encoding(dataset,'Solvent')
     
     # physical descriptors
-    time , temp , equvalent = physical_data_preprocess(dataset_path)
+    time , temp , equvalent = physical_data_preprocess(dataset)
     
-    df=pd.read_csv(dataset_path)
+    df=dataset
     X,yielsds,DOI,mechanism,origins = [],[],[],[],[]
     for i in df.index:
         

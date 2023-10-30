@@ -30,9 +30,9 @@ def featurise(feature_id,dataset):
         X_fp, y_fp, DOI_fp, mechanisms, origins_fp,substrate_class,coupling_partner_class = drfp_ft.process_dataframe(dataset)
         return X_fp, y_fp,mechanisms,substrate_class,coupling_partner_class
     elif feature_id == 'DFT':
-        data_path =f"{filepath}/Featurisation_methods/DFT/descriptor_data/"
-        dataset_path=f'{filepath}/DATA/Dataset1.7.csv'
-        X_dft, y_dft, DOI_dft, mechanisms, origins_dft,substrate_class,coupling_partner_class = featurize_main_data(dataset_path,data_path)
+        data_path = "D:/Reaction optimization project/descriptor_data..till dataset1.7_/"
+        #data_path =f"{filepath}/Featurisation_methods/DFT/descriptor_data/"
+        X_dft, y_dft, DOI_dft, mechanisms, origins_dft,substrate_class,coupling_partner_class = featurize_main_data(dataset,data_path)
         return  X_dft, y_dft,mechanisms,substrate_class,coupling_partner_class
     elif feature_id == 'RDkitFP':
         dataset = dataset.reset_index(drop=True)
@@ -235,7 +235,8 @@ def get_result(data_id,output_path,feature_ids,models_reg,model_types,input_data
     
     return summary
         
-              
+
+    
 if __name__ == "__main__":
     input_datapath = filepath  #location of the folder containing datasets
     Dataset_id0 = ['Dataset'] #name of the dataset
@@ -249,7 +250,7 @@ if __name__ == "__main__":
         test_size_ls = [0.2, 0.3]
         n_iterations_ls = [10, 5]
         stratification_types = ['mechanism', 'substrate_class', 'coupling_partner_class', 'no_stratification'] #possible Values : 'mechanism', 'substrate_class', 'coupling_partner_class', 'no_stratification'
-        feature_ids = ['DRFP', 'RDkitFP']
+        feature_ids = ['DFT']
         models_reg = ['random_forest', 'random_forest_h_tuning_grid','nural_net']
         models_classi = ['knn_classification', 'knn_classification_HPT']
 
@@ -267,7 +268,7 @@ if __name__ == "__main__":
 full_summary.to_csv(f'{filepath}/result/full_summary_id0.csv')
    
 
-
+def validation()
  
                                             
     

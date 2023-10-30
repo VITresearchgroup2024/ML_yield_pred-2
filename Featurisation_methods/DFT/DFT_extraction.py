@@ -1,3 +1,6 @@
+import warnings
+warnings.simplefilter('ignore')
+
 import os
 import re
 import pandas as pd
@@ -281,14 +284,17 @@ def extract_descriptors_from_folder(folder_path):
     merged_df = pd.DataFrame()
 
     for log_file in log_files:
+     try:
         log_file_path = os.path.join(folder_path, log_file)
         log_extractor = gaussian_log_extractor(log_file_path)
         df = log_extractor.get_freq_part_descriptors()
         df.insert(0, 'FileName', log_file)
         merged_df = merged_df.append(df, ignore_index=True)
-       
+     except Exception as e:
+           print(f"An error occurred for {log_file}")
+           continue  
     return merged_df
 
-
-df = extract_descriptors_from_folder("D:/Reaction optimization project/source code/DFT/opti/product/optimized final")
-df.to_csv("D:/Reaction optimization project/source code/DFT/opti/product/product_descriptors.csv")
+folder = 'Coupling'
+df = extract_descriptors_from_folder(f"C:/Users/vivek/Downloads/DFT-20231028T104857Z-001/DFT/{folder}/volume")
+df.to_csv(f"C:/Users/vivek/Downloads/DFT/{folder}_descriptors.csv")
