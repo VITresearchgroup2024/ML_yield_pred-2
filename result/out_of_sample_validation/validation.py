@@ -22,8 +22,8 @@ out of sample prediction using the trained model
 def validation(validation_dataset,train_test_Dataset):
  
 
-    dataset = pd.read_csv(f"{filepath}/DATA/Dataset.csv")
-    X, y, DOI_fp, mechanisms, origins_fp,substrate_class,coupling_partner_class = drfp_ft.process_dataframe(dataset)
+    dataset = pd.read_csv(train_test_Dataset)
+    X, y, DOI_fp, mechanisms, origins_fp,solvent,solvent = drfp_ft.process_dataframe(dataset)
     X_training, X_test, y_training, y_test = train_test_split(X, y, test_size=0.2, random_state=0,stratify=mechanisms)
     predictor = RandomForestRegressor(n_estimators=100)
     pred = copy.deepcopy(predictor)
@@ -41,11 +41,11 @@ def validation(validation_dataset,train_test_Dataset):
     print(f"validation correlation of new data = {r2_val}")
     
     df =pd.DataFrame(zip(y_val,y_val_pred), columns = ['Yields','Predicted Yields'])
-    result_csv_path ="D:/Reaction optimization project/source code/result/out_of_sample_validation/Nickel_result.csv"
+    result_csv_path ="D:/Reaction optimization project/source code/result/out_of_sample_validation/solvent_validation.csv"
     df.to_csv(result_csv_path)
-    image_path ="D:/Reaction optimization project/source code/result/out_of_sample_validation/Nickel_result.png"
+    image_path ="D:/Reaction optimization project/source code/result/out_of_sample_validation/solvent_validation.png"
     rmse , mae , r2 = visualise_reg(result_csv_path, image_path)
     
-train_test_Dataset = f"{filepath}/DATA/Dataset.csv"
-validation_dataset = "D:/Reaction optimization project/source code/result/out_of_sample_validation/Nickel SONOGASHIRA.csv"
+train_test_Dataset = "D:/Reaction optimization project/source code/DATA/out_of_sample_test/solvent_train&test.csv"
+validation_dataset = "D:/Reaction optimization project/source code/DATA/out_of_sample_test/solvent_validation.csv"
 validation(validation_dataset,train_test_Dataset)
