@@ -1,6 +1,6 @@
 #turnoff warnings(optional)
 import warnings
-warnings.simplefilter('ignore')
+#warnings.simplefilter('ignore')
 #warnings.simplefilter(action='ignore',catagory=FutureWarning)
 import pandas as pd
 
@@ -30,8 +30,8 @@ def featurise(feature_id,dataset):
         X_fp, y_fp, DOI_fp, mechanisms, origins_fp,substrate_class,coupling_partner_class = drfp_ft.process_dataframe(dataset)
         return X_fp, y_fp,mechanisms,substrate_class,coupling_partner_class
     elif feature_id == 'DFT':
-        data_path = "D:/Reaction optimization project/descriptor_data..till dataset1.7_/"
-        #data_path =f"{filepath}/Featurisation_methods/DFT/descriptor_data/"
+
+        data_path =f"{filepath}/Featurisation_methods/DFT/descriptor_data/"
         X_dft, y_dft, DOI_dft, mechanisms, origins_dft,substrate_class,coupling_partner_class = featurize_main_data(dataset,data_path)
         return  X_dft, y_dft,mechanisms,substrate_class,coupling_partner_class
     elif feature_id == 'RDkitFP':
@@ -268,8 +268,7 @@ if __name__ == "__main__":
 full_summary.to_csv(f'{filepath}/result/full_summary_id0.csv')
    
 
-def validation()
- 
+
                                             
     
 

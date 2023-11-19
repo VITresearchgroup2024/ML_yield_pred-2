@@ -3,8 +3,7 @@ from rdkit import Chem
 import numpy as np
 from sklearn.preprocessing import OneHotEncoder
 
-data_path ="D:/Reaction optimization project/source code/DFT/descriptor_data/"
-dataset='D:/Reaction optimization project/source code/DATA/Dataset1.4 (coupling class corrected).csv'
+
 
 
 
@@ -44,7 +43,7 @@ def featurize_smile(descrip_data_path,dataset,column_name):
           Nan_index.append(i)
        i=i+1      
           
-  print(f"index with NaN values for {column_name} \n {Nan_index} ")        
+  #print(f"index with NaN values for {column_name} \n {Nan_index} ")        
   return descriptor_array
 
 # Converts a list of integers or strings to a one hot featurisation
@@ -111,17 +110,14 @@ def featurize_main_data(dataset,data_path):
     coupling_partner_class = df['coupling_partner_class']
     arr = np.array(X)
     X = np.nan_to_num(arr, nan=0.0)
-    
+    X=X.astype('float32')
+
     return X, np.array(yields), np.array(DOI), np.array(mechanism), np.array(origin) ,np.array(substrate_class), np.array(coupling_partner_class)
     
     
-        
     
-    
-    
-    
-    
-    
+
+
     
 
 
