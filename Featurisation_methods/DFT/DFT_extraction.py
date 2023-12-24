@@ -295,6 +295,6 @@ def extract_descriptors_from_folder(folder_path):
            continue  
     return merged_df
 
-folder = 'Coupling'
-df = extract_descriptors_from_folder(f"C:/Users/vivek/Downloads/DFT-20231028T104857Z-001/DFT/{folder}/volume")
-df.to_csv(f"C:/Users/vivek/Downloads/DFT/{folder}_descriptors.csv")
+folder = 'Substrate'
+df = extract_descriptors_from_folder(f"C:/Users/vivek/Downloads/AA")
+df.to_csv(f"C:/Users/vivek/Downloads/AA/descriptors.csv")

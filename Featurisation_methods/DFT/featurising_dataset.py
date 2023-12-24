@@ -99,7 +99,7 @@ def featurize_main_data(dataset,data_path):
     X,yielsds,DOI,mechanism,origins = [],[],[],[],[]
     for i in df.index:
         
-        feature_vector = np.concatenate((ligands[i],substrate[i],coupling_partner[i],product[i],catalyst_precursor[i],reagent[i],solvent[i], [time[i]],[temp[i]], equvalent[i]))
+        feature_vector = np.concatenate((ligands[i],substrate[i],catalyst_precursor[i],reagent[i],solvent[i], [time[i]],[temp[i]], equvalent[i]))
         X.append(feature_vector)
         
     yields = df['isolated_yield'].to_list()
@@ -114,8 +114,9 @@ def featurize_main_data(dataset,data_path):
 
     return X, np.array(yields), np.array(DOI), np.array(mechanism), np.array(origin) ,np.array(substrate_class), np.array(coupling_partner_class)
     
-    
-    
+dataset = pd.read_csv("D:/Reaction optimization project/source code/DATA/Dataset.csv")
+data_path = "D:/Reaction optimization project/source code/Featurisation_methods/DFT/descriptor_data/"
+featurize_main_data(dataset,data_path)
 
 
     
