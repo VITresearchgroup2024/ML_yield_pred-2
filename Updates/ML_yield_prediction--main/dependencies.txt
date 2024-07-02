@@ -1,0 +1,11 @@
+pip install pandas
+pip install rdkit
+pip install pytorch
+pip install seaborn
+pip install sklearn
+pip install scikit-optimize
+pip install drfp
+pip install matplotlib
+pip install transformers
+pip install numpy
+pip install torch
